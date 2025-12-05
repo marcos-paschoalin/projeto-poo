@@ -93,7 +93,7 @@ Dashboard NBA/
 ## Usando o Dashboard
 
 - Escolha a temporada desejada na sidebar
-  ![Sidebar - Temporada](/images/img1.png)  
+  ![Sidebar - Temporada](/images/img1.PNG)  
 - Selecione um ou mais times da temporada
   ![Sidebar - Times](images/img2.png)  
 - Ajuste o filtro mínimo de aproveitamento de bolas de 3
