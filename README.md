@@ -1,21 +1,34 @@
 Dashboard NBA: A Revolução da Bola de 3 (2015–2025)
-Este projeto é um dashboard interativo em Streamlit que analisa a evolução das bolas de 3 pontos na NBA, com foco nas temporadas de 2014–15 a 2023–24.
-O app coleta dados da API oficial da NBA via nba_api, salva em arquivos CSV locais e exibe visualizações e métricas comparando a liga com os times campeões.
+Sobre o Projeto
+Título e Tema
+Dashboard interativo em Streamlit que analisa a evolução das bolas de 3 pontos na NBA, focando nas temporadas de 2014–15 a 2023–24.
 
-Funcionalidades
-Coleta automática de dados da NBA
+Justificativa da Escolha do Tema
+A análise da bola de 3 pontos na NBA evidencia a transformação estratégica e estatística do jogo nas últimas décadas. O uso crescente dessa jogada tem impacto direto no estilo de jogo, resultados e campeonatos. Este dashboard permite entender essa evolução, destacando tendências e o desempenho dos times campeões.
 
-Usa o endpoint LeagueDashTeamStats da biblioteca nba_api para baixar estatísticas por time e temporada da temporada regular.
+Fonte de Dados
+API Utilizada
+NBA API via biblioteca nba_api
 
-Salva um CSV consolidado com todas as temporadas em data/processed_team_stats_2015_2025.csv.
+Endpoint: LeagueDashTeamStats
 
-Cria um CSV com os campeões de cada temporada em data/champions.csv.
+Dados coletados por time e temporada da temporada regular
 
-Processamento e criação de métricas
+Os dados são armazenados localmente em arquivos CSV para evitar requisições repetidas
 
-Mantém colunas principais: temporada, time, jogos, vitórias, derrotas, bolas de 3 convertidas, tentadas, aproveitamento e pontos.
+Atualização e Armazenamento
+Arquivo consolidado de estatísticas das temporadas: data/processed_team_stats_2015_2025.csv
 
-Calcula:
+Arquivo com os campeões de cada temporada: data/champions.csv
+
+Descrição dos Dados
+O dataset contém informações detalhadas das temporadas:
+
+Temporada, time, jogos, vitórias, derrotas
+
+Bolas de 3 convertidas, tentadas, aproveitamento e pontos
+
+Métricas calculadas:
 
 Bolas de 3 por jogo (THREES_PER_GAME)
 
@@ -25,183 +38,98 @@ Pontos vindos de 3 (POINTS_FROM_3)
 
 Percentual dos pontos totais vindos de 3 (PERCENT_POINTS_3)
 
-Cache de dados
+Perguntas-Chave
+Como a dependência da bola de 3 evoluiu na NBA entre 2015 e 2025?
 
-Usa @st.cache_data para carregar os dados apenas na primeira execução, evitando novas requisições à API sempre que o app é recarregado.
+Qual o desempenho da liga e dos times campeões em aproveitamento e tentativas de 3 pontos?
 
-Filtros interativos na barra lateral
+Quais times têm maior volume e eficiência nas bolas de 3 por temporada?
 
-Seleção de temporada.
+Como essas métricas mudaram historicamente ao longo das temporadas?
 
-Seleção de um ou mais times da temporada escolhida.
+Como Rodar o Projeto Localmente
+Pré-requisitos
+Python 3.8 ou superior
 
-Filtro mínimo de aproveitamento de 3 pontos (em porcentagem).
+pip (gerenciador de pacotes Python)
 
-Métricas de destaque da temporada selecionada
+Instruções
+Clone ou copie o projeto para sua máquina
 
-Média de tentativas de 3 por jogo na liga.
+Crie e ative ambiente virtual (opcional, recomendado)
 
-Aproveitamento médio de 3 pontos da liga.
+Windows: venv\Scripts\activate
 
-Aproveitamento de 3, tentativas de 3 por jogo e percentual dos pontos vindos de 3 do time campeão da temporada (quando presente nos dados).
+Linux/Mac: source venv/bin/activate
 
-Visualizações
-
-Gráfico de barras: ranking dos times com mais bolas de 3 convertidas por jogo na temporada filtrada.
-
-Gráfico de linhas histórico:
-
-Média de tentativas de 3 por jogo da liga (todas as equipes).
-
-Tentativas de 3 por jogo do campeão em cada temporada.
-
-Tabela detalhada e exportação
-
-Tabela interativa com estatísticas filtradas (vitórias, derrotas, bolas de 3 por jogo, tentativas, aproveitamento, % dos pontos de 3, flag de campeão).
-
-Botão para baixar em CSV os dados filtrados da temporada selecionada.
-
-Contexto do projeto
-
-Demonstra um fluxo completo de Ciência de Dados:
-
-Coleta (API NBA)
-
-Armazenamento em CSV
-
-Limpeza e transformação
-
-Visualização interativa com Streamlit
-
-Estrutura principal do código
-Configuração geral
-
-Diretório data/ para armazenamento dos CSVs.
-
-Lista de temporadas (SEASONS) e lista dos campeões (CHAMPIONS_DATA).
-
-Função get_team_stats_for_season(season)
-
-Chama LeagueDashTeamStats para uma temporada específica.
-
-Retorna um DataFrame com as estatísticas do time e adiciona a coluna SEASON.
-
-Função generate_csv_files()
-
-Cria o diretório data/ se não existir.
-
-Faz loop pelas temporadas em SEASONS, baixa os dados e concatena em um único DataFrame.
-
-Seleciona apenas as colunas relevantes e cria novas métricas relacionadas a bolas de 3.
-
-Salva o CSV processado de estatísticas e o CSV dos campeões.
-
-Função ensure_data_files()
-
-Verifica se os arquivos processed_team_stats_2015_2025.csv e champions.csv existem.
-
-Se não existirem, chama generate_csv_files() para gerá-los.
-
-Função load_data() (com @st.cache_data)
-
-Garante que os CSVs existam.
-
-Lê os arquivos de estatísticas e campeões, faz o merge pela coluna SEASON.
-
-Cria a coluna booleana IS_CHAMPION indicando se o time é o campeão da temporada.
-
-Bloco principal do app Streamlit
-
-Configura layout e título do app (st.set_page_config, st.title, st.markdown).
-
-Carrega os dados com spinner de carregamento.
-
-Cria os filtros na sidebar.
-
-Aplica filtros por temporada, time e aproveitamento mínimo de 3 pontos.
-
-Ajusta FG3_PCT para porcentagem se estiver em escala 0–1.
-
-Calcula métricas agregadas da liga e do campeão.
-
-Exibe:
-
-Métricas em colunas com st.metric.
-
-Gráfico de barras (st.bar_chart) para bolas de 3 por jogo.
-
-Gráfico de linhas (st.line_chart) para evolução histórica liga x campeões.
-
-Tabela com st.dataframe.
-
-Botão de download de CSV com st.download_button.
-
-Requisitos
-Crie um arquivo requirements.txt com, por exemplo:
-
-text
-streamlit
-pandas
-nba_api
-(Adapte versões específicas se necessário.)
-
-Passo a passo para rodar o projeto
-Clonar ou copiar o projeto
-
-Salve o arquivo Python (por exemplo, app.py) e este README.md em uma pasta do seu computador.
-
-Criar e ativar um ambiente virtual (opcional, mas recomendado)
-
-No terminal/prompt de comando:
-
-bash
-python -m venv venv
-# Windows
-venv\Scripts\activate
-# Linux/Mac
-source venv/bin/activate
-Instalar as dependências
+Instale as dependências
 
 bash
 pip install -r requirements.txt
-Executar o app Streamlit
+Execute o app Streamlit
 
 bash
 streamlit run app.py
-Substitua app.py pelo nome do arquivo Python que contém o código.
+(substitua app.py pelo nome do arquivo Python caso seja diferente)
 
-Acessar o dashboard
+Acesse o dashboard pelo endereço local informado, normalmente http://localhost:8501
 
-Após rodar o comando, o Streamlit informará um endereço local (geralmente http://localhost:8501).
+Primeira execução (coleta dos dados)
+Pode demorar mais, pois o app coletará dados da API da NBA para todas as temporadas do intervalo
 
-Abra esse endereço no navegador.
+Os dados serão armazenados localmente para uso rápido em execuções posteriores
 
-Primeira execução (coleta de dados)
+Funcionalidades
+Coleta automática de dados da NBA e armazenamento local em CSV
 
-Na primeira vez, o app pode demorar um pouco mais porque:
+Processamento e criação de métricas relacionadas à bola de 3
 
-Vai chamar a API da NBA para cada temporada em SEASONS.
+Cache inteligente para evitar novas requisições desnecessárias (@st.cache_data)
 
-Vai gerar e salvar os CSVs em data/.
+Filtros interativos na sidebar para temporada, times e aproveitamento mínimo de 3 pontos
 
-Nas próximas execuções, o app lerá os CSVs locais e usará o cache, ficando bem mais rápido.
+Métricas de destaque para liga e campeões por temporada
 
-Usando o dashboard
+Visualizações:
 
-Na barra lateral, escolha a temporada desejada.
+Gráfico de barras: ranking de times por bolas de 3 convertidas por jogo
 
-Se quiser, selecione apenas alguns times da temporada.
+Gráfico de linhas histórico para evolução das tentativas de 3 na liga e campeões
 
-Ajuste o aproveitamento mínimo de 3 pontos para filtrar equipes com bom desempenho no perímetro.
+Tabela interativa para visualização detalhada e exportação para CSV
 
-Observe:
+Estrutura do Projeto
+text
+Dashboard NBA/
+├── app.py                               # Código principal do app Streamlit
+├── data/
+│   ├── processed_team_stats_2015_2025.csv  # Estatísticas consolidadas
+│   └── champions.csv                    # Lista de campeões por temporada
+├── requirements.txt                     # Dependências do projeto
+└── README.md                           # Documentação do projeto
+Funções Principais do Código
+get_team_stats_for_season(season): coleta dados para uma temporada específica
 
-As métricas da liga e do campeão.
+generate_csv_files(): gera arquivos CSV com estatísticas e campeões
 
-O ranking de bolas de 3 por jogo por time.
+ensure_data_files(): checa existência dos arquivos CSV, gera-os se necessário
 
-A evolução histórica da dependência da bola de 3 na liga e nos campeões.
+load_data(): carrega os dados processados em DataFrames cacheados
 
-A tabela detalhada de estatísticas.
+Usando o Dashboard
+Escolha a temporada desejada na sidebar
 
-Use o botão de download para exportar o CSV filtrado.
+Selecione um ou mais times da temporada
+
+Ajuste o filtro mínimo de aproveitamento de bolas de 3
+
+Veja métricas do campeonato e da liga, gráficos e tabelas detalhadas
+
+Exporte os dados filtrados em CSV pelo botão dedicado
+
+Participantes
+Felipe Pinheiro Bahia Putti
+
+Marcos Vinicius Paschoalin Ambrozio
+
+Turma: 2º Semestre - Ciência de Dados
