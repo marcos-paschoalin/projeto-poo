@@ -92,11 +92,18 @@ Dashboard NBA/
 
 ## Usando o Dashboard
 
-- Escolha a temporada desejada na sidebar  
-- Selecione um ou mais times da temporada  
-- Ajuste o filtro mínimo de aproveitamento de bolas de 3  
-- Veja métricas do campeonato e da liga, gráficos e tabelas detalhadas  
+- Escolha a temporada desejada na sidebar
+  ![Sidebar - Temporada](images/img1.png)  
+- Selecione um ou mais times da temporada
+  ![Sidebar - Times](images/img2.png)  
+- Ajuste o filtro mínimo de aproveitamento de bolas de 3
+  ![Sidebar - Bolas de 3](images/img3.png)  
+- Veja métricas do campeonato e da liga, gráficos e tabelas detalhadas
+  ![Gráfico - Colunas](images/img4.png)
+  ![Gráfico - Linhas](images/img5.png)
+  ![Tabela](images/img6.png)
 - Exporte os dados filtrados em CSV pelo botão dedicado
+  ![Exportar Dados - Botão](images/img7.png)
 
 ## Participantes
 
